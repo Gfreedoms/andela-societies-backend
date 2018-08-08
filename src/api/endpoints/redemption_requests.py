@@ -160,7 +160,7 @@ class PointRedemptionAPI(Resource):
                 center_query = Center.query.filter_by(
                             name=search_term_center).first()
                 if not center_query:
-                    mes = f"country with name:{search_term_center} not found"
+                    mes = f"Center with name:{search_term_center} not found"
                     return {"message": mes}, 400
 
                 redemp_request = RedemptionRequest.query.filter_by(
@@ -239,11 +239,11 @@ class RedemptionRequestNumeration(Resource):
 
             # Get the relevant Finance Center to respond on RedemptionRequest
             if str(redemp_request.center.name.lower()) == 'kampala':
-                finance_email = str(redemp_request.center.name.lower())+".fin"
-                "ance@andela.com"
+                finance_email = redemp_request.center.name.lower() + \
+                    ".finance@andela.com"
             else:
-                finance_email = str(redemp_request.center.name.lower())+"-fin"
-                "ance@andela.com"
+                finance_email = redemp_request.center.name.lower() + \
+                    "-finance@andela.com"
 
             send_email.delay(
                 sender=current_app.config["SENDER_CREDS"],
